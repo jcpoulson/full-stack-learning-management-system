@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
+import './reset.css';
 import './App.css';
 
 const App = () => {
@@ -12,7 +13,7 @@ useEffect(()=>{
 
   return (
     <div className="App">
-		{/* {courses.map(course => <h1>{course.title}</h1>)}  */} { /* This code on the left renders on the page then freaks out after a refresh*/}
+      
     </div>
   );
 }
