@@ -1,14 +1,21 @@
 // Stateless component
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
     return(
         <header>
             <div className="wrap header--flex">
-                <h1 className="header--logo"><a href="index.html">Courses</a></h1>
+                <NavLink to="/">
+                    <h1 className="header--logo">Courses</h1>
+                </NavLink>
                 <nav>
                     <ul className="header--signedout">
-                        <li><a href="sign-up.html">Sign Up</a></li>
-                        <li><a href="sign-in.html">Sign In</a></li>
+                        <NavLink to="/signup">
+                            <li>Sign Up</li>
+                        </NavLink>
+                        <NavLink to="/signin">
+                            <li>Sign In</li>
+                        </NavLink>
                     </ul>
                 </nav>
             </div>

@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import axios from "axios";
 
 
 // Components
@@ -14,21 +13,15 @@ import UserSignUp from './components/UserSignUp';
 
 
 const App = () => {
-	const [courses, setCourses] = useState([]); // move this state data to courses component
-
-	useEffect(()=>{
-		axios.get("http://localhost:5000/api/courses")
-			.then(data => setCourses(data.data))
-	}, []) // Move this state data to courses component
-
 	return (
 		<div className="App">
-			<Header />
 
 			<BrowserRouter>
+				<Header />
+				
 				<Switch>
-					<Route exact path="/" render={()=> <Courses courses={courses}/>} />
-					<Route exact path="/courses" render={()=> <Courses courses={courses}/>} />
+					<Route exact path="/" render={()=> <Courses />} />
+					<Route exact path="/courses" render={()=> <Courses />} />
 					<Route exact path="/courses/create" component={CreateCourse} />
 					<Route exact path="/courses/:id/update" component={UpdateCourse} />
 					<Route exact path="/courses/:id" component={CourseDetail} />

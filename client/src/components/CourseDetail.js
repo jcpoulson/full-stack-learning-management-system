@@ -1,5 +1,7 @@
 // Stateful component
 
+// have this component make a request to the API using the course ID in the route/URL
+
 const CourseDetail = () => {
     return (
         <main>
