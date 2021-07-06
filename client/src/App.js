@@ -10,7 +10,7 @@ import Courses from './components/Courses';
 
 
 const App = () => {
-	const [courses, setCourses] = useState();
+	const [courses, setCourses] = useState([]);
 
 	useEffect(()=>{
 		axios.get("http://localhost:5000/api/courses")
