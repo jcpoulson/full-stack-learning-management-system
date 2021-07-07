@@ -7,15 +7,16 @@ import axios from 'axios';
 
 const CourseDetail = () => {
     const location = useLocation();
-    const currentCourseId = location.pathname[location.pathname.length - 1];
+
+    const splitUrl = location.pathname.split("/courses/");
+    const courseId = splitUrl[1];
 
     const [currentCourse, setCurrentCourse] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/courses/${currentCourseId}`)
+        axios.get(`http://localhost:5000/api/courses/${courseId}`)
             .then(data => setCurrentCourse(data.data))
     }, [])
-    console.log(currentCourse);
 
     return (
         <main>
