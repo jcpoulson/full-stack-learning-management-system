@@ -15,11 +15,15 @@ import UserSignUp from './components/UserSignUp';
 const App = () => {
 	const [user, setUser] = useState({});
 
+	const signout = () => {
+		setUser({});
+	}
+
 	return (
 		<div className="App">
 
 			<BrowserRouter>
-				<Header />
+				<Header authenticatedUser={user} signOut={signout}/>
 				<Switch>
 					<Route exact path="/" render={()=> <Courses />} />
 					<Route exact path="/courses" render={()=> <Courses />} />
