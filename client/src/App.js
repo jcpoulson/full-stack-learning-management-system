@@ -20,14 +20,13 @@ const App = () => {
 
 			<BrowserRouter>
 				<Header />
-				
 				<Switch>
 					<Route exact path="/" render={()=> <Courses />} />
 					<Route exact path="/courses" render={()=> <Courses />} />
 					<Route exact path="/courses/create" component={CreateCourse} />
 					<Route exact path="/courses/:id/update" component={UpdateCourse} />
 					<Route exact path="/courses/:id" component={CourseDetail} />
-					<Route exact path="/signin" component={UserSignIn} />
+					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} />} />
 					<Route exact path="/signup" component={UserSignUp} />
 				</Switch>
 			</BrowserRouter>

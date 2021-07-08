@@ -62,7 +62,6 @@ const UserSignUp = (props) => {
         <main>
             <div className="form--centered">
                 <h2>Sign Up</h2>
-                {console.log(props)}
                 <div>
                     <label for="firstName">First Name</label>
                     <input onChange={change} id="firstName" name="firstName" type="text"/>
@@ -74,9 +73,9 @@ const UserSignUp = (props) => {
                     <input onChange={change} id="password" name="password" type="password"/>
                     <label for="confirmPassword">Confirm Password</label>
                     <input onChange={change} id="confirmPassword" name="confirmPassword" type="password"/>
-                    <button className="button" onClick={submit}>Sign Up</button><button className="button button-secondary" onClick="event.preventDefault();">Cancel</button>
+                    <button className="button" onClick={submit}>Sign Up</button><NavLink to="/"><button className="button button-secondary" onClick="event.preventDefault();">Cancel</button></NavLink>
                 </div>
-                <p>Already have a user account? Click here to <NavLink to="/"><a>sign in</a></NavLink>!</p>
+                <p>Already have a user account? Click here to <NavLink to="/signin"><a>sign in</a></NavLink>!</p>
             </div>
         </main>
     )
