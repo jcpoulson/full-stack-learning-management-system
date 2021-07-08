@@ -13,6 +13,8 @@ import UserSignUp from './components/UserSignUp';
 
 
 const App = () => {
+	const [user, setUser] = useState({});
+
 	return (
 		<div className="App">
 
