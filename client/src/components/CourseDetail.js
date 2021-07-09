@@ -1,11 +1,8 @@
-// Stateful component
-
-// have this component make a request to the API using the course ID in the route/URL
 import React, {useState, useEffect} from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
-const CourseDetail = () => {
+const CourseDetail = (props) => {
     const location = useLocation();
 
     const splitUrl = location.pathname.split("/courses/");
@@ -20,13 +17,18 @@ const CourseDetail = () => {
 
     return (
         <main>
-            <div className="actions--bar">
-                <div className="wrap">
-                    <a className="button" href="update-course.html">Update Course</a>
-                    <a className="button" href="#">Delete Course</a>
-                    <a className="button button-secondary" href="index.html">Return to List</a>
-                </div>
-            </div>
+            {/* Render this menu bar only if the user is logged in */}
+                {props.authenticatedUser.id ? 
+                    <div className="actions--bar">
+                        <div className="wrap">
+                            <NavLink to="/courses/:id/update" className="button">Update Course</NavLink>
+                            <NavLink to="/courses/:id/update" className="button">Delete Course</NavLink>
+                            <NavLink to="/" className="button button-secondary">Return to List</NavLink>
+                        </div>
+                    </div>
+                :
+                    null
+                }
             
             <div className="wrap">
                 <h2>Course Detail</h2>

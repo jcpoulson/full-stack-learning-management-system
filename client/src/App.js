@@ -10,6 +10,7 @@ import UpdateCourse from './components/UpdateCourse';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import PrivateRoute from './components/PrivateRoute';
 
 
 const App = () => {
@@ -25,13 +26,15 @@ const App = () => {
 			<BrowserRouter>
 				<Header authenticatedUser={user} signOut={signout}/>
 				<Switch>
-					<Route exact path="/" render={()=> <Courses />} />
-					<Route exact path="/courses" render={()=> <Courses />} />
-					<Route exact path="/courses/create" component={CreateCourse} />
-					<Route exact path="/courses/:id/update" component={UpdateCourse} />
-					<Route exact path="/courses/:id" component={CourseDetail} />
-					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} />} />
+					{/* Protected Routes*/}
+					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} />
+					<Route exact path="/courses/:id/update" component={UpdateCourse} /> {/* Protect this route */}
+
+					<Route exact path="/" component={Courses} />
+					<Route exact path="/courses" component={Courses} />
 					<Route exact path="/signup" component={UserSignUp} />
+					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} />} />
+					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} />} />
 				</Switch>
 			</BrowserRouter>
 		</div>
