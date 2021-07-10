@@ -35,6 +35,8 @@ const UserSignIn = (props) => {
           .catch(function (error) {
             console.log(error);
           });
+
+          props.setStatePassword(userPassword); // this adds the password to application state
     }
 
     return (

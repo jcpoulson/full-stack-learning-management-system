@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 
@@ -15,6 +15,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
 	const [user, setUser] = useState({});
+	const [statePassword, setStatePassword] = useState('');
 
 	const signout = () => {
 		setUser({});
@@ -27,14 +28,14 @@ const App = () => {
 				<Header authenticatedUser={user} signOut={signout}/>
 				<Switch>
 					{/* Protected Routes*/}
-					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} />
+					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} />
 					<Route exact path="/courses/:id/update" component={UpdateCourse} /> {/* Protect this route */}
 
 					<Route exact path="/" component={Courses} />
 					<Route exact path="/courses" component={Courses} />
 					<Route exact path="/signup" component={UserSignUp} />
 					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} />} />
-					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} />} />
+					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} setStatePassword={setStatePassword} />} />
 				</Switch>
 			</BrowserRouter>
 		</div>

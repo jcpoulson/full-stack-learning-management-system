@@ -55,7 +55,7 @@ const UserSignUp = (props) => {
           .catch(function (error) {
             console.log(error);
           });
-          props.history.push('/')
+          props.history.push('/signin')
     }
 
     return (
