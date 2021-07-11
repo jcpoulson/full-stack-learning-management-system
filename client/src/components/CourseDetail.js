@@ -21,7 +21,7 @@ const CourseDetail = (props) => {
                 {props.authenticatedUser.id ? 
                     <div className="actions--bar">
                         <div className="wrap">
-                            <NavLink to="/courses/:id/update" className="button">Update Course</NavLink>
+                            <NavLink to={`/courses/${courseId}/update`} className="button">Update Course</NavLink>
                             <NavLink to="/courses/:id/update" className="button">Delete Course</NavLink>
                             <NavLink to="/" className="button button-secondary">Return to List</NavLink>
                         </div>
