@@ -29,7 +29,7 @@ const App = () => {
 				<Switch>
 					{/* Protected Routes*/}
 					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} />
-					<Route exact path="/courses/:id/update" component={UpdateCourse} /> {/* Protect this route */}
+					<PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} authenticatedUser={user} statePassword={statePassword} />
 
 					<Route exact path="/" component={Courses} />
 					<Route exact path="/courses" component={Courses} />

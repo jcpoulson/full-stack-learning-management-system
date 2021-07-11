@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useHistory, useLocation, Redirect } from 'react-router-dom';
+import btoa from 'btoa';
 import axios from 'axios';
 
-const UpdateCourse = () => {
+const UpdateCourse = (props) => {
     const location = useLocation();
+    const history = useHistory();
     const splitUrl = location.pathname.split("/update");
     const courseId = splitUrl[0].split('/courses/')[1];
 
-    const [currentCourse, setCurrentCourse] = useState({});
     const [courseTitle, setCourseTitle] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
@@ -15,7 +16,12 @@ const UpdateCourse = () => {
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/courses/${courseId}`)
-            .then(data => setCurrentCourse(data.data))
+            .then(data => {
+                setCourseTitle(data.data.title)
+                setCourseDescription(data.data.description)
+                setEstimatedTime(data.data.estimatedTime)
+                setMaterialsNeeded(data.data.materialsNeeded)
+            })
     }, [])
 
 
@@ -31,31 +37,61 @@ const UpdateCourse = () => {
         }
     }
 
+    const submit = () => {
+        const encodedCredentials = btoa(`${props.authUser.emailAddress}:${props.statePassword}`);
+        let data = JSON.stringify({
+            "id": courseId,
+            "title": courseTitle,
+            "description": courseDescription,
+            "estimatedTime": estimatedTime,
+            "materialsNeeded": materialsNeeded,
+            "userId": props.authUser.id
+          });
+          
+          let config = {
+            method: 'put',
+            url: `http://localhost:5000/api/courses/${courseId}`,
+            headers: { 
+              'Content-Type': 'application/json', 
+              'Authorization': `Basic ${encodedCredentials}`
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(response => {
+            console.log(JSON.stringify(response.data));
+            history.push('/');
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
     return (
         <main>
             <div className="wrap">
                 <h2>Update Course</h2>
-                <form>
                     <div className="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" value={currentCourse.title} onChange={change}/>
+                            <input id="courseTitle" name="courseTitle" type="text" onChange={change} value={courseTitle}/>
 
                             <p>By Joe Smith</p>
 
                             <label for="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" value={currentCourse.description}></textarea>
+                            <textarea id="courseDescription" name="courseDescription" onChange={change} value={courseDescription}></textarea>
                         </div>
                         <div>
                             <label for="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" value={currentCourse.estimatedTime} />
+                            <input id="estimatedTime" name="estimatedTime" type="text" onChange={change} value={estimatedTime} />
 
                             <label for="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" value={currentCourse.materialsNeeded}></textarea>
+                            <textarea id="materialsNeeded" name="materialsNeeded" onChange={change} value={materialsNeeded}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Update Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
-                </form>
+                    <button className="button" type="submit" onClick={submit}>Update Course</button><NavLink to="/"><NavLink to="/" className="button button-secondary">Return to List</NavLink></NavLink>
+                
             </div>
         </main>
     )

@@ -17,8 +17,8 @@ const CourseDetail = (props) => {
 
     return (
         <main>
-            {/* Render this menu bar only if the user is logged in */}
-                {props.authenticatedUser.id ? 
+            {/* Render this menu bar only if the user is logged in and their id matches the userID for the course */}
+                {props.authenticatedUser.id === currentCourse.userId ? 
                     <div className="actions--bar">
                         <div className="wrap">
                             <NavLink to={`/courses/${courseId}/update`} className="button">Update Course</NavLink>
@@ -27,7 +27,11 @@ const CourseDetail = (props) => {
                         </div>
                     </div>
                 :
-                    null
+                    <div className="actions--bar">
+                        <div className="wrap">
+                            <NavLink to="/" className="button button-secondary">Return to List</NavLink>
+                        </div>
+                    </div>
                 }
             
             <div className="wrap">
