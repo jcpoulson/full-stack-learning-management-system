@@ -1,5 +1,6 @@
 import React, {useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 // Components
@@ -34,7 +35,7 @@ const App = () => {
 					<Route exact path="/" component={Courses} />
 					<Route exact path="/courses" component={Courses} />
 					<Route exact path="/signup" component={UserSignUp} />
-					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} />} />
+					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} statePassword={statePassword} />} />
 					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} setStatePassword={setStatePassword} />} />
 				</Switch>
 			</BrowserRouter>
