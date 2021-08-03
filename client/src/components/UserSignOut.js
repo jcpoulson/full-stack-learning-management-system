@@ -1,11 +1,13 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const UserSignOut = (props) => {
     const history = useHistory();
 
-    console.log("this should print to the console, to test that the component call works")
+    return(
+        <Redirect to="/" />
+    );
 
     // props.setUser({});
     // Cookies.remove('authenticatedUser');

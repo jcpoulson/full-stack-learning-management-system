@@ -23,7 +23,7 @@ const App = () => {
 		<div className="App">
 
 			<BrowserRouter>
-				<Header authenticatedUser={user} signOut={() => <UserSignOut setUser={setUser} />}/>
+				<Header authenticatedUser={user} UserSignOut={UserSignOut}/>
 				<Switch>
 					{/* Protected Routes*/}
 					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} />
@@ -34,6 +34,8 @@ const App = () => {
 					<Route exact path="/signup" component={UserSignUp} />
 					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} statePassword={statePassword} />} />
 					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} setStatePassword={setStatePassword} />} />
+
+					<Route exact path="/signout" component={UserSignOut} />
 				</Switch>
 			</BrowserRouter>
 		</div>
