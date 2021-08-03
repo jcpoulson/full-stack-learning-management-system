@@ -1,3 +1,13 @@
-// Stateless component
+import React from 'react';
+import { useHistory } from 'react-router';
+import Cookies from 'js-cookie';
 
-// We will come back to this component as it doesn't render visuals, it simply signs the user out of the application
+const UserSignOut = (props) => {
+    const history = useHistory();
+
+    props.setUser({});
+    Cookies.remove('authenticatedUser');
+    history.push('/')
+}
+
+export default UserSignOut;

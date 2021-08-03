@@ -11,22 +11,19 @@ import UpdateCourse from './components/UpdateCourse';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import UserSignOut from './components/UserSignOut';
 import PrivateRoute from './components/PrivateRoute';
 
 
 const App = () => {
-	const [user, setUser] = useState({});
+	const [user, setUser] = useState(Cookies.getJSON('authenticatedUser') || {} );
 	const [statePassword, setStatePassword] = useState('');
-
-	const signout = () => {
-		setUser({});
-	}
 
 	return (
 		<div className="App">
 
 			<BrowserRouter>
-				<Header authenticatedUser={user} signOut={signout}/>
+				<Header authenticatedUser={user} signOut={() => <UserSignOut setUser={setUser} />}/>
 				<Switch>
 					{/* Protected Routes*/}
 					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} />

@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 const Header = (props) => {
     return(
         <header>
+        {console.log(props)}
             <div className="wrap header--flex">
                 <NavLink to="/">
                     <h1 className="header--logo">Courses</h1>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import btoa from 'btoa';
 import axios from 'axios';
 
@@ -30,6 +31,7 @@ const UserSignIn = (props) => {
           axios(config)
           .then(response => {
             props.signIn(response.data);
+            Cookies.set('authenticatedUser', JSON.stringify(response.data), { expires: 1 });
             history.push('/')
           })
           .catch(function (error) {
