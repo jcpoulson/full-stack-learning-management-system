@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import btoa from 'btoa';
-import axios from 'axios';
 
 const UserSignIn = (props) => {
     const [userEmail, setUserEmail] = useState('');
@@ -18,27 +15,8 @@ const UserSignIn = (props) => {
     }
 
     const submit = () => {
-        const encodedCredentials = btoa(`${userEmail}:${userPassword}`);
-        
-        let config = {
-            method: 'get',
-            url: 'http://localhost:5000/api/users',
-            headers: { 
-              'Authorization': `Basic ${encodedCredentials}`
-            }
-          };
-          
-          axios(config)
-          .then(response => {
-            props.signIn(response.data);
-            Cookies.set('authenticatedUser', JSON.stringify(response.data), { expires: 1 });
-            history.push('/')
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-          props.setStatePassword(userPassword); // this adds the password to application state
+        props.signIn(userEmail, userPassword);
+        history.push('/');
     }
 
     return (

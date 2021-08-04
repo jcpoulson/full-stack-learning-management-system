@@ -8,7 +8,7 @@ const Header = (props) => {
             <div className="wrap header--flex">
                 <NavLink to="/">
                     <h1 className="header--logo">Courses</h1>
-                    <h1>DEV-Branch</h1>
+                    <h1>Dev-Branch</h1>
                 </NavLink>
                 <nav>
                 {props.authenticatedUser.id 
