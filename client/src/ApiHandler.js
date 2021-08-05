@@ -60,6 +60,47 @@ class ApiHandler {
           let request = await axios(config)
 		  return request.data;
 	}
+
+  deleteCourse = async (userEmail, userPassword, courseId) => {
+    const encodedCredentials = btoa(`${userEmail}:${userPassword}`);
+        let config = {
+            method: 'delete',
+            url: `http://localhost:5000/api/courses/${courseId}`,
+            headers: { 
+              'Content-Type': 'application/json', 
+              'Authorization': `Basic ${encodedCredentials}`
+            }
+          };
+          
+        let request = await axios(config);
+        return request.data;
+  }
+
+
+  createCourse = async (emailAddress, password, courseTitle, courseDescription, estimatedTime, materialsNeeded, userId) => {
+    const encodedCredentials = btoa(`${emailAddress}:${password}`);
+        
+        let data = JSON.stringify({
+            "title": courseTitle,
+            "description": courseDescription,
+            "estimatedTime": estimatedTime,
+            "materialsNeeded": materialsNeeded,
+            "teacherId": userId
+          });
+          
+          let config = {
+            method: 'post',
+            url: 'http://localhost:5000/api/courses',
+            headers: { 
+              'Content-Type': 'application/json', 
+              'Authorization': `Basic ${encodedCredentials}`
+            },
+            data : data
+          };
+          
+        let request = await axios(config);
+        return request.data;
+  }
 }
 
 

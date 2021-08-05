@@ -38,6 +38,12 @@ const UpdateCourse = (props) => {
     }
 
     const submit = async () => {
+        // client side validation
+        if (courseTitle.length === 0 || courseDescription.length === 0) {
+            document.querySelector('.validation--errors').style.display = 'block';
+            return;
+        }
+
         props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
         history.push(`/courses`);
     }
@@ -46,6 +52,14 @@ const UpdateCourse = (props) => {
         <main>
             <div className="wrap">
                 <h2>Update Course</h2>
+                    <div className="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                            <li>Please provide a value for "Title"</li>
+                            <li>Please provide a value for "Description"</li>
+                        </ul>
+                    </div>
+
                     <div className="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>

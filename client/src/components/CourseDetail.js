@@ -16,29 +16,7 @@ const CourseDetail = (props) => {
         axios.get(`http://localhost:5000/api/courses/${courseId}`)
             .then(course => setCurrentCourse(course.data))
     }, [])
-
-
-    const deleteCourse = () => {
-        const encodedCredentials = btoa(`${props.authenticatedUser.emailAddress}:${props.statePassword}`);
-        let config = {
-            method: 'delete',
-            url: `http://localhost:5000/api/courses/${courseId}`,
-            headers: { 
-              'Content-Type': 'application/json', 
-              'Authorization': `Basic ${encodedCredentials}`
-            }
-          };
-          
-          axios(config)
-          .then(response => {
-            console.log(JSON.stringify(response.data));
-            history.push('/')
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    }
-
+    
     
     return (
         <main>
@@ -47,7 +25,11 @@ const CourseDetail = (props) => {
                     <div className="actions--bar">
                         <div className="wrap">
                             <NavLink to={`/courses/${courseId}/update`} className="button">Update Course</NavLink>
-                            <button className="button" onClick={deleteCourse}>Delete Course</button>
+                                <button className="button" onClick={() => { 
+                                                                props.deleteCourse(props.authenticatedUser.emailAddress, props.statePassword, currentCourse.id)
+                                                                history.push('/');
+                                                            }}>
+                                Delete Course</button>
                             <NavLink to="/" className="button button-secondary">Return to List</NavLink>
                         </div>
                     </div>

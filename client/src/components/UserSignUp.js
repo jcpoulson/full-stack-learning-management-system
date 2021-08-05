@@ -33,6 +33,7 @@ const UserSignUp = (props) => {
             return;
         } else if (firstName.length === 0 || lastName.length === 0 || emailAddress.length === 0 || password.length === 0 || confirmPassword.length === 0) {
             document.querySelector('.validation--errors').style.display = 'block';
+            return;
         }
 
         props.signUp(firstName, lastName, emailAddress, password);

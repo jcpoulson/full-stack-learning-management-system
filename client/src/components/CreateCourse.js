@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import axios from 'axios';
-import btoa from 'btoa';
 
 const CreateCourse = (props) => {
     const [courseTitle, setCourseTitle] = useState('');
@@ -24,40 +22,14 @@ const CreateCourse = (props) => {
     }
 
     const submit = () => {
-        const validationErrorField = document.querySelector('.validation--errors');
-
+        // client side validation
         if (courseTitle.length === 0 || courseDescription.length === 0) {
-            validationErrorField.style.display = 'block';
+            document.querySelector('.validation--errors').style.display = 'block';
+            return;
         }
         
-        const encodedCredentials = btoa(`${props.authUser.emailAddress}:${props.statePassword}`);
-        
-        let data = JSON.stringify({
-            "title": courseTitle,
-            "description": courseDescription,
-            "estimatedTime": estimatedTime,
-            "materialsNeeded": materialsNeeded,
-            "teacherId": props.authUser.id
-          });
-          
-          let config = {
-            method: 'post',
-            url: 'http://localhost:5000/api/courses',
-            headers: { 
-              'Content-Type': 'application/json', 
-              'Authorization': `Basic ${encodedCredentials}`
-            },
-            data : data
-          };
-          
-          axios(config)
-          .then(function (response) {
-            console.log(JSON.stringify(response.data));
-            history.push('/')
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        props.createCourse(props.authUser.emailAddress, props.statePassword, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        history.push('/');
     }
 
     return(

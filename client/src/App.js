@@ -44,13 +44,13 @@ const App = () => {
 				<Switch>
 
 					{/* Protected Routes*/}
-					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} />
+					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} createCourse={apiHandler.createCourse} />
 					<PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} authenticatedUser={user} statePassword={statePassword} updateCourse={apiHandler.updateCourse}/>
 
 					<Route exact path="/" component={Courses} />
 					<Route exact path="/courses" component={Courses} />
 					<Route exact path="/signup" render={()=> <UserSignUp signUp={apiHandler.signUp} signIn={signIn} />} />
-					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} statePassword={statePassword} />} />
+					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} statePassword={statePassword} deleteCourse={apiHandler.deleteCourse} />} />
 					<Route exact path="/signin" render={()=> <UserSignIn signIn={signIn} setStatePassword={setStatePassword} />} />
 					<Route exact path="/signout" render={() => <UserSignOut signOut={signOut} />} />
 				</Switch>
