@@ -39,7 +39,7 @@ const UpdateCourse = (props) => {
 
     const submit = async () => {
         props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
-        history.push(`/courses/${courseId}`)
+        history.push(`/courses`);
     }
 
     return (
