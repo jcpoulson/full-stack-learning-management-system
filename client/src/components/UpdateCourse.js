@@ -16,11 +16,11 @@ const UpdateCourse = (props) => {
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/courses/${courseId}`)
-            .then(data => {
-                setCourseTitle(data.data.title)
-                setCourseDescription(data.data.description)
-                setEstimatedTime(data.data.estimatedTime)
-                setMaterialsNeeded(data.data.materialsNeeded)
+            .then(course => {
+                setCourseTitle(course.data.title)
+                setCourseDescription(course.data.description)
+                setEstimatedTime(course.data.estimatedTime)
+                setMaterialsNeeded(course.data.materialsNeeded)
             })
     }, [])
 
@@ -37,35 +37,9 @@ const UpdateCourse = (props) => {
         }
     }
 
-    const submit = () => {
-        const encodedCredentials = btoa(`${props.authUser.emailAddress}:${props.statePassword}`);
-        let data = JSON.stringify({
-            "id": courseId,
-            "title": courseTitle,
-            "description": courseDescription,
-            "estimatedTime": estimatedTime,
-            "materialsNeeded": materialsNeeded,
-            "userId": props.authUser.id
-          });
-          
-          let config = {
-            method: 'put',
-            url: `http://localhost:5000/api/courses/${courseId}`,
-            headers: { 
-              'Content-Type': 'application/json', 
-              'Authorization': `Basic ${encodedCredentials}`
-            },
-            data : data
-          };
-          
-          axios(config)
-          .then(response => {
-            console.log(JSON.stringify(response.data));
-            history.push('/');
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    const submit = async () => {
+        props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        history.push(`/courses/${courseId}`)
     }
 
     return (
@@ -77,7 +51,7 @@ const UpdateCourse = (props) => {
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" onChange={change} value={courseTitle}/>
 
-                            <p>By Joe Smith</p>
+                            <p>By {props.authUser.firstName} {props.authUser.lastName}</p>
 
                             <label for="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" onChange={change} value={courseDescription}></textarea>

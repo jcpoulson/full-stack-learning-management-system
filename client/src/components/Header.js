@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 const Header = (props) => {
     return(
         <header>
-        {console.log(props)}
             <div className="wrap header--flex">
                 <NavLink to="/">
                     <h1 className="header--logo">Courses</h1>
@@ -15,7 +14,7 @@ const Header = (props) => {
                     ?
                         <ul className="header--signedout">
                             <li>Welcome {props.authenticatedUser.firstName} {props.authenticatedUser.lastName}</li>
-                            <NavLink to="/" onClick={() => props.signOut()}>
+                            <NavLink to="/signout" >
                                 <li>Sign Out</li>
                             </NavLink>
                         </ul>

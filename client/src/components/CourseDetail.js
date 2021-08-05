@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { useLocation, NavLink, useHistory } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import btoa from 'btoa';
 import axios from 'axios';
 
 const CourseDetail = (props) => {
     const location = useLocation();
     const history = useHistory();
-
     const splitUrl = location.pathname.split("/courses/");
     const courseId = splitUrl[1];
 
@@ -14,7 +14,7 @@ const CourseDetail = (props) => {
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/courses/${courseId}`)
-            .then(data => setCurrentCourse(data.data))
+            .then(course => setCurrentCourse(course.data))
     }, [])
 
 
@@ -68,14 +68,14 @@ const CourseDetail = (props) => {
                             <h4 className="course--name">{currentCourse.title}</h4>
                             <p>User ID: {currentCourse.userId}</p>
                             
-                            <p>{currentCourse.description}</p>
+                            <ReactMarkdown>{currentCourse.description}</ReactMarkdown>
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
                             <p>{currentCourse.estimatedTime}</p>
 
                             <h3 className="course--detail--title">Materials Needed</h3>
-                            <h2>{currentCourse.materialsNeeded}</h2>
+                            <ReactMarkdown>{currentCourse.materialsNeeded}</ReactMarkdown>
                         </div>
                     </div>
                 </form>

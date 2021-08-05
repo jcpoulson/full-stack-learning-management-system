@@ -1,13 +1,15 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const UserSignOut = (props) => {
-    const history = useHistory();
 
-    props.setUser({});
+    props.signOut();
     Cookies.remove('authenticatedUser');
-    history.push('/')
+    
+    return (
+        <Redirect to="/" />
+    )
 }
 
 export default UserSignOut;
