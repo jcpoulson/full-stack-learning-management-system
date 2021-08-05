@@ -19,7 +19,7 @@ const App = () => {
 	const apiHandler = new ApiHandler();
 
 	const [user, setUser] = useState(Cookies.getJSON('authenticatedUser') || {} );
-	const [statePassword, setStatePassword] = useState(''); // this is in state so that the password is globally available to the application
+	const [statePassword, setStatePassword] = useState(Cookies.getJSON('statePassword') || '' ); // this is in state so that the password is globally available to the application
 
 
 	const signIn = async (userEmail, userPassword) => {
@@ -27,6 +27,7 @@ const App = () => {
 		setUser(apiResponseData);
 		setStatePassword(userPassword);
 		Cookies.set('authenticatedUser', JSON.stringify(apiResponseData), { expires: 1 });
+		Cookies.set('statePassword', JSON.stringify(userPassword), { expires: 1 });
 	}
 
 

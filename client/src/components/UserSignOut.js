@@ -6,6 +6,7 @@ const UserSignOut = (props) => {
 
     props.signOut();
     Cookies.remove('authenticatedUser');
+    Cookies.remove('statePassword');
     
     return (
         <Redirect to="/" />
