@@ -16,12 +16,11 @@ const UserSignIn = (props) => {
 
     const submit = () => {
         props.signIn(userEmail, userPassword);
-        history.push('/');
+        history.goBack();
     }
 
     return (
         <main>
-        {console.log(props)}
             <div className="form--centered">
                 <h2>Sign In</h2>
                 

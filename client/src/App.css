@@ -212,6 +212,15 @@ input:focus, button:focus, .button:focus, textarea:focus {
   display: none;
 }
 
+.not-found, .not-found-text {
+  text-align: center;
+  font-size: xx-large;
+}
+
+.not-found-img {
+  width: 50%;
+}
+
 @media screen and (min-width: 600px) {
   .header--signedin li {
       display: inline-block;

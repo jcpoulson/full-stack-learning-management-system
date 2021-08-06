@@ -14,6 +14,9 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 import PrivateRoute from './components/PrivateRoute';
+import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
+import UnhandledError from './components/UnhandledError';
 
 const App = () => {
 	const apiHandler = new ApiHandler();
@@ -53,6 +56,10 @@ const App = () => {
 					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} statePassword={statePassword} deleteCourse={apiHandler.deleteCourse} />} />
 					<Route exact path="/signin" render={()=> <UserSignIn signIn={signIn} setStatePassword={setStatePassword} />} />
 					<Route exact path="/signout" render={() => <UserSignOut signOut={signOut} />} />
+
+					<Route path="/notfound" component={NotFound} />
+					<Route path="/forbidden" component={Forbidden} />
+					<Route path="/error" component={UnhandledError} />
 				</Switch>
 			</BrowserRouter>
 		</div>

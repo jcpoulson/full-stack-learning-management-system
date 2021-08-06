@@ -43,10 +43,10 @@ const UpdateCourse = (props) => {
             return;
         }
 
+        // Sending the request to the API
         let updateRequest = await props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
-        
         if (updateRequest.status !== 204) {
-            // redirect to Forbidden Component
+            <Redirect to="/forbidden" />
         }
         history.push(`/courses`);
     }

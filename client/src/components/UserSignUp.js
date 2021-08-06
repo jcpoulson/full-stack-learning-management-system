@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, Redirect } from 'react-router-dom';
 
 const UserSignUp = (props) => {
     const [firstName, setfirstName] = useState('');
@@ -36,10 +36,10 @@ const UserSignUp = (props) => {
             return;
         }
 
+        // Sending the request to the API
         let signUpRequest = await props.signUp(firstName, lastName, emailAddress, password);
-
         if (signUpRequest.status !== 201) {
-            // redirect to Error Component
+            <Redirect to="/error" />
         }
         props.signIn(emailAddress, password);
         history.push('/')

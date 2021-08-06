@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, Redirect } from 'react-router-dom';
 
 const CreateCourse = (props) => {
     const [courseTitle, setCourseTitle] = useState('');
@@ -28,9 +28,10 @@ const CreateCourse = (props) => {
             return;
         }
         
+        // Sending the request to the API
         let createCourseRequest = await props.createCourse(props.authUser.emailAddress, props.statePassword, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
         if (createCourseRequest.status !== 201) {
-            // redirect to Error component
+            <Redirect to="/error" />
         }
         history.push('/');
     }
