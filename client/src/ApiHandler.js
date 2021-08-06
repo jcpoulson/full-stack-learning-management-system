@@ -34,7 +34,7 @@ class ApiHandler {
             data : data
           };
           let request = await axios(config)
-		  return console.log(request.data);
+		      return request.data;
 	}
 
 	updateCourse = async (emailAddress, password, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, userId) => {
@@ -58,7 +58,7 @@ class ApiHandler {
             data : data
           };
           let request = await axios(config)
-		  return request.data;
+		      return request;
 	}
 
   deleteCourse = async (userEmail, userPassword, courseId) => {
@@ -99,7 +99,7 @@ class ApiHandler {
           };
           
         let request = await axios(config);
-        return request.data;
+        return request;
   }
 }
 

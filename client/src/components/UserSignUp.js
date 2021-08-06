@@ -36,7 +36,11 @@ const UserSignUp = (props) => {
             return;
         }
 
-        props.signUp(firstName, lastName, emailAddress, password);
+        let signUpRequest = await props.signUp(firstName, lastName, emailAddress, password);
+
+        if (signUpRequest.status !== 201) {
+            // redirect to Error Component
+        }
         props.signIn(emailAddress, password);
         history.push('/')
     }

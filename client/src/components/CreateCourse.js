@@ -21,14 +21,17 @@ const CreateCourse = (props) => {
         }
     }
 
-    const submit = () => {
+    const submit = async () => {
         // client side validation
         if (courseTitle.length === 0 || courseDescription.length === 0) {
             document.querySelector('.validation--errors').style.display = 'block';
             return;
         }
         
-        props.createCourse(props.authUser.emailAddress, props.statePassword, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        let createCourseRequest = await props.createCourse(props.authUser.emailAddress, props.statePassword, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        if (createCourseRequest.status !== 201) {
+            // redirect to Error component
+        }
         history.push('/');
     }
 

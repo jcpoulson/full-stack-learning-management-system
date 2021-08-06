@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useHistory, useLocation, Redirect } from 'react-router-dom';
-import btoa from 'btoa';
 import axios from 'axios';
 
 const UpdateCourse = (props) => {
@@ -44,7 +43,11 @@ const UpdateCourse = (props) => {
             return;
         }
 
-        props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        let updateRequest = await props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        
+        if (updateRequest.status !== 204) {
+            // redirect to Forbidden Component
+        }
         history.push(`/courses`);
     }
 
