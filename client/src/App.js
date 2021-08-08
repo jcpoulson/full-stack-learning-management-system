@@ -43,10 +43,15 @@ const App = () => {
 		<div className="App">
 
 			<BrowserRouter>
+<<<<<<< HEAD
 				<Header authenticatedUser={user} />
+=======
+				<Header authenticatedUser={user} UserSignOut={UserSignOut}/>
+>>>>>>> 6af826abfc8695dcc13a6f6e7e7c5042ce1d4a70
 				<Switch>
 
 					{/* Protected Routes*/}
+<<<<<<< HEAD
 					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} createCourse={apiHandler.createCourse} />
 					<PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} authenticatedUser={user} statePassword={statePassword} updateCourse={apiHandler.updateCourse}/>
 
@@ -60,6 +65,18 @@ const App = () => {
 					<Route path="/notfound" component={NotFound} />
 					<Route path="/forbidden" component={Forbidden} />
 					<Route path="/error" component={UnhandledError} />
+=======
+					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} />
+					<PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} authenticatedUser={user} statePassword={statePassword} />
+
+					<Route exact path="/" component={Courses} />
+					<Route exact path="/courses" component={Courses} />
+					<Route exact path="/signup" component={UserSignUp} />
+					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} statePassword={statePassword} />} />
+					<Route exact path="/signin" render={()=> <UserSignIn signIn={setUser} setStatePassword={setStatePassword} />} />
+
+					<Route exact path="/signout" component={UserSignOut} />
+>>>>>>> 6af826abfc8695dcc13a6f6e7e7c5042ce1d4a70
 				</Switch>
 			</BrowserRouter>
 		</div>
