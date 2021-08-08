@@ -23,7 +23,7 @@ const App = () => {
 
 	const [user, setUser] = useState(Cookies.getJSON('authenticatedUser') || {} );
 	const [statePassword, setStatePassword] = useState(Cookies.getJSON('statePassword') || '' ); // this is in state so that the password is globally available to the application
-
+	const [validationHistory, setValidationHistory] = useState('');
 
 	const signIn = async (userEmail, userPassword) => {
 		const apiResponseData = await apiHandler.signIn(userEmail, userPassword);
@@ -50,11 +50,11 @@ const App = () => {
 					<PrivateRoute exact path="/courses/create" component={CreateCourse} authenticatedUser={user} statePassword={statePassword} createCourse={apiHandler.createCourse} />
 					<PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} authenticatedUser={user} statePassword={statePassword} updateCourse={apiHandler.updateCourse}/>
 
-					<Route exact path="/" component={Courses} />
-					<Route exact path="/courses" component={Courses} />
+					<Route exact path="/" render={() => <Courses setValidationHistory={setValidationHistory} authenticatedUser={user} statePassword={statePassword}/>} />
+					<Route exact path="/courses" render={() => <Courses setValidationHistory={setValidationHistory} authenticatedUser={user} statePassword={statePassword}/>} />
 					<Route exact path="/signup" render={()=> <UserSignUp signUp={apiHandler.signUp} signIn={signIn} />} />
 					<Route exact path="/courses/:id" render={()=> <CourseDetail authenticatedUser={user} statePassword={statePassword} deleteCourse={apiHandler.deleteCourse} />} />
-					<Route exact path="/signin" render={()=> <UserSignIn signIn={signIn} setStatePassword={setStatePassword} />} />
+					<Route exact path="/signin" render={()=> <UserSignIn signIn={signIn} setStatePassword={setStatePassword} validationHistory={validationHistory} setValidationHistory={setValidationHistory} />} />
 					<Route exact path="/signout" render={() => <UserSignOut signOut={signOut} />} />
 
 					<Route path="/notfound" component={NotFound} />

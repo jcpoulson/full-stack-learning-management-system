@@ -48,7 +48,7 @@ const UpdateCourse = (props) => {
         if (updateRequest.status !== 204) {
             <Redirect to="/forbidden" />
         }
-        history.push(`/courses`);
+        history.push(`/courses/${courseId}`)
     }
 
     return (

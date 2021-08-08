@@ -16,14 +16,21 @@ const UserSignIn = (props) => {
 
     const submit = () => {
         props.signIn(userEmail, userPassword);
-        history.goBack();
+        
+        // This redirects the user to the previous screen if they tried to access a resource while not signed in
+        if (props.validationHistory) {
+            setTimeout(() => history.push(props.validationHistory), 1000);
+            props.setValidationHistory('');
+        } else {
+            history.push('/');
+        }
     }
 
     return (
         <main>
             <div className="form--centered">
                 <h2>Sign In</h2>
-                
+                {console.log(props)}
                 <div className="signin-form">
                     <label for="emailAddress">Email Address</label>
                     <input id="emailAddress" name="emailAddress" type="email" onChange={change}/>

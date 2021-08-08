@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useLocation, NavLink, useHistory } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import btoa from 'btoa';
 import axios from 'axios';
 
 const CourseDetail = (props) => {
@@ -26,9 +25,9 @@ const CourseDetail = (props) => {
                         <div className="wrap">
                             <NavLink to={`/courses/${courseId}/update`} className="button">Update Course</NavLink>
                                 <button className="button" onClick={() => { 
-                                                                props.deleteCourse(props.authenticatedUser.emailAddress, props.statePassword, currentCourse.id)
-                                                                history.push('/');
-                                                            }}>
+                                    props.deleteCourse(props.authenticatedUser.emailAddress, props.statePassword, currentCourse.id)
+                                    setTimeout(() => history.push('/'), 1500)
+                                }}>
                                 Delete Course</button>
                             <NavLink to="/" className="button button-secondary">Return to List</NavLink>
                         </div>

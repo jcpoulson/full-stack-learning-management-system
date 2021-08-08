@@ -1,6 +1,12 @@
 import btoa from 'btoa';
 import axios from 'axios';
 
+/* 
+  So this class is the API handler, so instead of having really long methods inside each of the components, I moved
+  all the functions that connect to API within this ApiHandler class, these methods make requests to the API with the given data
+  and simply just return the data from the API, the rest of the functionality is taken care of inside the respective components
+*/
+
 
 class ApiHandler {
 

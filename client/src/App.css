@@ -29,7 +29,7 @@ a {
   padding: 0 1rem;
 }
 header {
-  background: #57496e;
+  background: #06bd95;
   color: #fff;
   padding: 1rem 0;
   margin-bottom: 2rem;
@@ -43,11 +43,21 @@ header {
   font-size: 1.25rem;
   color: #fff;
 }
-header li {
-  font-size: .8rem;
+
+.header--logo a h1{
+  color: white;
 }
+
+header li {
+  font-size: 1rem;
+}
+
+header li:hover {
+  transform: scale(1.1);
+}
+
 header nav a {
-  color: #dbd;
+  color: #fff;
 }
 header nav a:hover {
   color: #fff;
@@ -68,6 +78,12 @@ header nav a:hover {
   margin-bottom: 1.5rem;
   display: block;
 }
+
+.course--module:hover {
+  transform: scale(1.1);
+  background-color: #06bd95;
+}
+
 .course--label {
   color: #fff;
   font-size: .9rem;
@@ -219,6 +235,10 @@ input:focus, button:focus, .button:focus, textarea:focus {
 
 .not-found-img {
   width: 50%;
+}
+
+.home-icon:hover {
+  transform: scale(1.2);
 }
 
 @media screen and (min-width: 600px) {

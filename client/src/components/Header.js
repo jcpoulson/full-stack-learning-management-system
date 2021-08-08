@@ -1,13 +1,13 @@
 // Stateless component
 import { NavLink } from "react-router-dom";
+import Home from '../img/icons8-home.svg';
 
 const Header = (props) => {
     return(
         <header>
             <div className="wrap header--flex">
                 <NavLink to="/">
-                    <h1 className="header--logo">Courses</h1>
-                    <h1>Dev-Branch</h1>
+                        <img src={Home} className="home-icon" alt="Home"/>
                 </NavLink>
                 <nav>
                 {props.authenticatedUser.id 
