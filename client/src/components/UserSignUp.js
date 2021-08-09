@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { NavLink, useHistory, Redirect } from 'react-router-dom';
 
 const UserSignUp = (props) => {
     const [firstName, setfirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const history = useHistory();
 
     // This method updates state when the form changes
     const change = (event) => {
@@ -24,44 +25,37 @@ const UserSignUp = (props) => {
         }
     }
 
-    // This method sets up the post request to the API
-    const submit = () => {
-        // checks to see if password fields match 
+    
+    const submit = async () => {
+        // client side validation
         if (password !== confirmPassword) {
-            console.log("Passwords do not match");
+            document.querySelector('.validation--errors').style.display = 'block';
+            return;
+        } else if (firstName.length === 0 || lastName.length === 0 || emailAddress.length === 0 || password.length === 0 || confirmPassword.length === 0) {
+            document.querySelector('.validation--errors').style.display = 'block';
+            return;
         }
 
-        // setting up the post request with axios
-        let data = JSON.stringify({
-            "firstName": firstName,
-            "lastName": lastName,
-            "emailAddress": emailAddress,
-            "password": password
-          });
-          
-          let config = {
-            method: 'post',
-            url: 'http://localhost:5000/api/users',
-            headers: { 
-              'Content-Type': 'application/json'
-            },
-            data : data
-          };
-          
-          axios(config)
-          .then(function (response) {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-          props.history.push('/signin')
+        // Sending the request to the API
+        let signUpRequest = await props.signUp(firstName, lastName, emailAddress, password);
+        if (signUpRequest.status !== 201) {
+            <Redirect to="/error" />
+        }
+        props.signIn(emailAddress, password);
+        history.push('/')
     }
 
     return (
         <main>
             <div className="form--centered">
                 <h2>Sign Up</h2>
+                    <div className="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                            <li>Fill out all required fields</li>
+                            <li>Passwords do not match</li>
+                        </ul>
+                    </div>
                 <div>
                     <label for="firstName">First Name</label>
                     <input onChange={change} id="firstName" name="firstName" type="text"/>

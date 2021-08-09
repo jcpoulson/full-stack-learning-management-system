@@ -1,20 +1,20 @@
 // Stateless component
 import { NavLink } from "react-router-dom";
+import Home from '../img/icons8-home.svg';
 
 const Header = (props) => {
     return(
         <header>
-        {console.log(props)}
             <div className="wrap header--flex">
                 <NavLink to="/">
-                    <h1 className="header--logo">Courses</h1>
+                        <img src={Home} className="home-icon" alt="Home"/>
                 </NavLink>
                 <nav>
                 {props.authenticatedUser.id 
                     ?
                         <ul className="header--signedout">
                             <li>Welcome {props.authenticatedUser.firstName} {props.authenticatedUser.lastName}</li>
-                            <NavLink to="/" onClick={() => props.signOut()}>
+                            <NavLink to="/signout" >
                                 <li>Sign Out</li>
                             </NavLink>
                         </ul>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useHistory, useLocation, Redirect } from 'react-router-dom';
-import btoa from 'btoa';
 import axios from 'axios';
 
 const UpdateCourse = (props) => {
@@ -16,11 +15,11 @@ const UpdateCourse = (props) => {
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/courses/${courseId}`)
-            .then(data => {
-                setCourseTitle(data.data.title)
-                setCourseDescription(data.data.description)
-                setEstimatedTime(data.data.estimatedTime)
-                setMaterialsNeeded(data.data.materialsNeeded)
+            .then(course => {
+                setCourseTitle(course.data.title)
+                setCourseDescription(course.data.description)
+                setEstimatedTime(course.data.estimatedTime)
+                setMaterialsNeeded(course.data.materialsNeeded)
             })
     }, [])
 
@@ -37,47 +36,39 @@ const UpdateCourse = (props) => {
         }
     }
 
-    const submit = () => {
-        const encodedCredentials = btoa(`${props.authUser.emailAddress}:${props.statePassword}`);
-        let data = JSON.stringify({
-            "id": courseId,
-            "title": courseTitle,
-            "description": courseDescription,
-            "estimatedTime": estimatedTime,
-            "materialsNeeded": materialsNeeded,
-            "userId": props.authUser.id
-          });
-          
-          let config = {
-            method: 'put',
-            url: `http://localhost:5000/api/courses/${courseId}`,
-            headers: { 
-              'Content-Type': 'application/json', 
-              'Authorization': `Basic ${encodedCredentials}`
-            },
-            data : data
-          };
-          
-          axios(config)
-          .then(response => {
-            console.log(JSON.stringify(response.data));
-            history.push('/');
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    const submit = async () => {
+        // client side validation
+        if (courseTitle.length === 0 || courseDescription.length === 0) {
+            document.querySelector('.validation--errors').style.display = 'block';
+            return;
+        }
+
+        // Sending the request to the API
+        let updateRequest = await props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        if (updateRequest.status !== 204) {
+            <Redirect to="/forbidden" />
+        }
+        history.push(`/courses/${courseId}`)
     }
 
     return (
         <main>
             <div className="wrap">
                 <h2>Update Course</h2>
+                    <div className="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                            <li>Please provide a value for "Title"</li>
+                            <li>Please provide a value for "Description"</li>
+                        </ul>
+                    </div>
+
                     <div className="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" onChange={change} value={courseTitle}/>
 
-                            <p>By Joe Smith</p>
+                            <p>By {props.authUser.firstName} {props.authUser.lastName}</p>
 
                             <label for="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" onChange={change} value={courseDescription}></textarea>
