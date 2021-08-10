@@ -210,6 +210,10 @@ textarea {
   transition: box-shadow 0.2s, color 0.2s;
 }
 
+#signup-button {
+  width: 210px;
+}
+
 #button-return {
   background: #06bd95;
 }

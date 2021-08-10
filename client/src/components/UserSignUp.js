@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, useHistory, Redirect } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 const UserSignUp = (props) => {
     const [firstName, setfirstName] = useState('');
@@ -10,7 +10,7 @@ const UserSignUp = (props) => {
 
     const history = useHistory();
 
-    // This method updates state when the form changes
+    // This method handles state change
     const change = (event) => {
         if (event.target.id === "firstName") {
             setfirstName(event.target.value);
@@ -25,22 +25,23 @@ const UserSignUp = (props) => {
         }
     }
 
-    
+/* 
+    This method on submit uses the apiHandlers signUp method to send a request to the API
+    The rest of this function takes the response from the API and either proceeds to log 
+    the user into the application or warns the user of validation errors
+*/
     const submit = async () => {
-        // client side validation
-        if (password !== confirmPassword) {
-            document.querySelector('.validation--errors').style.display = 'block';
-            return;
-        } else if (firstName.length === 0 || lastName.length === 0 || emailAddress.length === 0 || password.length === 0 || confirmPassword.length === 0) {
+        // Sending the request to the API
+        let signUpRequest = await props.signUp(firstName, lastName, emailAddress, password);
+        
+        // API validation
+        if (signUpRequest.error) {
+            const error = signUpRequest.error;
+            document.querySelector('.error-msg').textContent = error;
             document.querySelector('.validation--errors').style.display = 'block';
             return;
         }
 
-        // Sending the request to the API
-        let signUpRequest = await props.signUp(firstName, lastName, emailAddress, password);
-        if (signUpRequest.status !== 201) {
-            <Redirect to="/error" />
-        }
         props.signIn(emailAddress, password);
         history.push('/')
     }
@@ -52,8 +53,7 @@ const UserSignUp = (props) => {
                     <div className="validation--errors">
                         <h3>Validation Errors</h3>
                         <ul>
-                            <li>Fill out all required fields</li>
-                            <li>Passwords do not match</li>
+                            <li className="error-msg">Fill out all required fields</li>
                         </ul>
                     </div>
                 <div>
@@ -67,7 +67,7 @@ const UserSignUp = (props) => {
                     <input onChange={change} id="password" name="password" type="password"/>
                     <label for="confirmPassword">Confirm Password</label>
                     <input onChange={change} id="confirmPassword" name="confirmPassword" type="password"/>
-                    <button className="button" onClick={submit}>Sign Up</button><NavLink to="/"><button className="button button-secondary" onClick="event.preventDefault();">Cancel</button></NavLink>
+                    <button className="button" id="signup-button" onClick={submit}>Sign Up</button><NavLink to="/"><button className="button button-secondary" id="signup-button" onClick="event.preventDefault();">Cancel</button></NavLink>
                 </div>
                 <p>Already have a user account? Click here to <NavLink to="/signin"><a>sign in</a></NavLink>!</p>
             </div>

@@ -6,6 +6,7 @@ const UserSignIn = (props) => {
     const [userPassword, setUserPassword] = useState('');
     const history = useHistory();
 
+    // Method for state change
     const change = (event) => {
         if (event.target.id === "emailAddress") {
             setUserEmail(event.target.value);
@@ -14,6 +15,9 @@ const UserSignIn = (props) => {
         }
     }
 
+/* 
+    This method on submit uses the signIn method from App.js to put user data within application state
+*/
     const submit = () => {
         props.signIn(userEmail, userPassword);
         

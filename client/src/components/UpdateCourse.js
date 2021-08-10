@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useHistory, useLocation, Redirect } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import Home from '../img/icons8-home.svg';
 import Cancel from '../img/cancel.svg';
 import axios from 'axios';
@@ -25,7 +25,7 @@ const UpdateCourse = (props) => {
             })
     }, [])
 
-
+    // Method that handles state change
     const change = (event) => {
         if (event.target.id === "courseTitle") {
             setCourseTitle(event.target.value);
@@ -38,18 +38,28 @@ const UpdateCourse = (props) => {
         }
     }
 
+/* 
+    This method on submit uses the apiHandlers updateCourse method to send a request to the API
+    The rest of this function takes the response from the API and either proceeds to the updated
+    course page or warns the user of validation errors
+*/
     const submit = async () => {
-        // client side validation
-        if (courseTitle.length === 0 || courseDescription.length === 0) {
+        // Sending the request to the API
+        let updateRequest = await props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
+        
+        // API validation
+        if (updateRequest.data.errors) {
+            const errors = updateRequest.data.errors;
+            const errorList = document.querySelector('.error-list')
             document.querySelector('.validation--errors').style.display = 'block';
+            for (let i = 0; i < errors.length; i++) {
+                let error = document.createElement('LI');
+                error.textContent = errors[i];
+                errorList.appendChild(error);
+            }
             return;
         }
 
-        // Sending the request to the API
-        let updateRequest = await props.updateCourse(props.authUser.emailAddress, props.statePassword, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
-        if (updateRequest.status !== 204) {
-            <Redirect to="/forbidden" />
-        }
         history.push(`/courses/${courseId}`)
     }
 
@@ -59,9 +69,8 @@ const UpdateCourse = (props) => {
                 <h2>Update Course</h2>
                     <div className="validation--errors">
                         <h3>Validation Errors</h3>
-                        <ul>
-                            <li>Please provide a value for "Title"</li>
-                            <li>Please provide a value for "Description"</li>
+                        <ul className="error-list">
+
                         </ul>
                     </div>
 

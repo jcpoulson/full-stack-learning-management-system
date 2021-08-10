@@ -56,7 +56,8 @@ router.post('/users', asyncHandler(async (req, res) => {
             if (error.name === "Error") {
                 error.message = "One or more required fields is missing"
             }
-            res.status(400).json({ error: error.message });   
+            res.json({ error: error.message });
+            res.status(400);
           }
     }
 }))
@@ -109,7 +110,8 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
         } catch (error) {
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
                 const errors = error.errors.map(err => err.message);
-                res.status(400).json({ errors });   
+                res.json({ errors });
+                res.status(400);
               }
         }
     } else {
@@ -147,7 +149,8 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {
         } catch (error) {
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
                 const errors = error.errors.map(err => err.message);
-                res.status(400).json({ errors });
+                res.json({ errors })
+                res.status(400);
               }
         }
     } else {

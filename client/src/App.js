@@ -25,6 +25,8 @@ const App = () => {
 	const [statePassword, setStatePassword] = useState(Cookies.getJSON('statePassword') || '' ); // this is in state so that the password is globally available to the application
 	const [validationHistory, setValidationHistory] = useState('');
 
+
+	// This method uses the APIhandler signIn method to collect user data and store the data within state
 	const signIn = async (userEmail, userPassword) => {
 		const apiResponseData = await apiHandler.signIn(userEmail, userPassword);
 		setUser(apiResponseData);
@@ -33,7 +35,7 @@ const App = () => {
 		Cookies.set('statePassword', JSON.stringify(userPassword), { expires: 1 });
 	}
 
-
+	// This method removes all user data from state
 	const signOut = () => {
 		setUser({});
 		setStatePassword('');

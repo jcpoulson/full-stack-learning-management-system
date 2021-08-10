@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useHistory, Redirect } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 const CreateCourse = (props) => {
     const [courseTitle, setCourseTitle] = useState('');
@@ -9,6 +9,7 @@ const CreateCourse = (props) => {
 
     const history = useHistory();
 
+    // Method that handles state change
     const change = (event) => {
         if (event.target.id === "courseTitle") {
             setCourseTitle(event.target.value);
@@ -21,17 +22,27 @@ const CreateCourse = (props) => {
         }
     }
 
+/* 
+    This method on submit uses the apiHandlers createCourse method to send a request to the API
+    The rest of this function takes the response from the API and either proceeds or warns the 
+    user of validation errors
+*/
     const submit = async () => {
-        // client side validation
-        if (courseTitle.length === 0 || courseDescription.length === 0) {
-            document.querySelector('.validation--errors').style.display = 'block';
-            return;
-        }
-        
-        // Sending the request to the API
+        // sending the request to the API 
         let createCourseRequest = await props.createCourse(props.authUser.emailAddress, props.statePassword, courseTitle, courseDescription, estimatedTime, materialsNeeded, props.authUser.id);
-        if (createCourseRequest.status !== 201) {
-            <Redirect to="/error" />
+        
+        // API validation
+        if (createCourseRequest.data.errors) {
+            const errors = createCourseRequest.data.errors;
+            const errorList = document.querySelector('.error-list')
+            document.querySelector('.validation--errors').style.display = 'block';
+            for (let i = 0; i < errors.length; i++) {
+                let error = document.createElement('LI');
+                error.textContent = errors[i];
+                errorList.appendChild(error);
+            }
+
+            return;
         }
         history.push('/');
     }
@@ -42,11 +53,11 @@ const CreateCourse = (props) => {
                 <h2>Create Course</h2>
                 <div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
+                    <ul className="error-list">
+                        
                     </ul>
                 </div>
+
                 
                     <div className="main--flex">
                         <div>

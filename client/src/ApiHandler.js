@@ -10,6 +10,12 @@ import axios from 'axios';
 
 class ApiHandler {
 
+    /**
+     * Get the user value.
+     * @param {userEmail} - users email address
+     * @param {userPassword} - users password
+     * @return {user} The user data
+     */
     signIn = async (userEmail, userPassword) => {
         const encodedCredentials = btoa(`${userEmail}:${userPassword}`);
 			let config = {
@@ -22,7 +28,16 @@ class ApiHandler {
 		let request = await axios(config)
         return request.data;     
     }
+  
 
+  /**
+     * Create a new user
+     * @param {firstName} - users first name
+     * @param {lastName} - users lastname
+     * @param {userEmail} - users email address
+     * @param {userPassword} - users password
+     * @return {confirmation} The user data
+     */
 	signUp = async (firstName, lastName, emailAddress, password) => {
 		let data = JSON.stringify({
             "firstName": firstName,
@@ -43,6 +58,16 @@ class ApiHandler {
 		      return request.data;
 	}
 
+
+  /**
+     * Updating an existing course
+     * @param {emailAddress} - users email address
+     * @param {password} - users password
+     * @param {courseId} - course to be modified
+     * @param {...courseData} - data to be used for the new course
+     * @param {userId} - owner of course
+     * @return {newCourseData} The new course data
+     */
 	updateCourse = async (emailAddress, password, courseId, courseTitle, courseDescription, estimatedTime, materialsNeeded, userId) => {
 		const encodedCredentials = btoa(`${emailAddress}:${password}`);
         let data = JSON.stringify({
@@ -67,6 +92,13 @@ class ApiHandler {
 		      return request;
 	}
 
+  /**
+     * Delete an existing course.
+     * @param {userEmail} - users email address
+     * @param {userPassword} - users password
+     * @param {courseId} - owner of course
+     * @return {API response} whether or not deletion of the course was successful
+     */
   deleteCourse = async (userEmail, userPassword, courseId) => {
     const encodedCredentials = btoa(`${userEmail}:${userPassword}`);
         let config = {
@@ -82,7 +114,14 @@ class ApiHandler {
         return request.data;
   }
 
-
+  /**
+     * Create a new course
+     * @param {emailAddress} - users email address
+     * @param {password} - users password
+     * @param {...courseData} - data to be used for the new course
+     * @param {userId} - owner of course
+     * @return {courseData} a confirmation that the new course was created
+     */
   createCourse = async (emailAddress, password, courseTitle, courseDescription, estimatedTime, materialsNeeded, userId) => {
     const encodedCredentials = btoa(`${emailAddress}:${password}`);
         
