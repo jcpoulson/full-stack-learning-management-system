@@ -190,7 +190,7 @@ textarea {
   border: 0;
   margin: 0 0 .5rem 0;
   display: block;
-  width: 210px;
+  width: 260px;
   text-align: center;
   border-radius: .5rem;
   font-weight: bold;
@@ -209,6 +209,23 @@ textarea {
   box-shadow: 0 0 0 2px #7c689b inset;
   transition: box-shadow 0.2s, color 0.2s;
 }
+
+#button-return {
+  background: #06bd95;
+}
+
+#button-return:hover {
+  background: red;
+}
+
+#button-cancel {
+  background: #06bd95;
+}
+
+#button-cancel:hover {
+  background: red;
+}
+
 .button-secondary:hover {
   color: #63537d;
   box-shadow: 0 0 0 2px #63537d inset;
@@ -239,6 +256,10 @@ input:focus, button:focus, .button:focus, textarea:focus {
 
 .home-icon:hover {
   transform: scale(1.2);
+}
+
+.return-home-icon {
+  width: 1em;
 }
 
 @media screen and (min-width: 600px) {

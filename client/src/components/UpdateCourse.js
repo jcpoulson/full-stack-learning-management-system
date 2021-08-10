@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useHistory, useLocation, Redirect } from 'react-router-dom';
+import Home from '../img/icons8-home.svg';
+import Cancel from '../img/cancel.svg';
 import axios from 'axios';
 
 const UpdateCourse = (props) => {
@@ -81,7 +83,9 @@ const UpdateCourse = (props) => {
                             <textarea id="materialsNeeded" name="materialsNeeded" onChange={change} value={materialsNeeded}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit" onClick={submit}>Update Course</button><NavLink to="/"><NavLink to="/" className="button button-secondary">Return to List</NavLink></NavLink>
+                    <button className="button" type="submit" onClick={submit}>Update Course</button>
+                    <NavLink to="/" className="button" id="button-return">Return to List <img src={Home} class="return-home-icon" alt="home icon"/></NavLink>
+                    <NavLink to={`/courses/${courseId}`} className="button" id="button-cancel">Cancel <img src={Cancel} class="return-home-icon" alt="cancel icon"/></NavLink>
                 
             </div>
         </main>
